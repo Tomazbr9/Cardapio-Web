@@ -348,21 +348,7 @@ Permite restaurar rapidamente:
 
 # Arquitetura Geral da Solução
 
-```text
-Cliente (PWA / Web)
-        ↓
-API REST (Go + Gin)
-        ↓
-──────────────────────────
-| PostgreSQL            |
-| Redis                 |
-| WebSockets            |
-──────────────────────────
-        ↓
-VPS Linux + Docker
-        ↓
-Object Storage (Backups/Imagens)
-```
+![Arquitetura MVP](../images/arquitetura_mvp.png)
 
 ---
 

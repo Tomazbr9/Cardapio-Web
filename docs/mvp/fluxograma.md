@@ -1,7 +1,5 @@
 # Fluxograma Operacional do Sistema — Sistema Web de Cardápio para Pizzarias
 
-![Arquitetura MVP](./images/arquitetura_mvp.png)
-
 Este é o momento de dar "vida" à arquitetura. O fluxograma (ou fluxo de processos) documenta a jornada do usuário e como os componentes do sistema interagem para realizar uma tarefa.
 
 O fluxo operacional da plataforma é dividido em três macroprocessos:
