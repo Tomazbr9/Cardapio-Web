@@ -1,4 +1,4 @@
-# Tecnologias Escolhidas — Sistema Web de Cardápio para Pizzarias
+# Tecnologias Escolhidas e Arquitetura — Sistema Web de Cardápio para Pizzarias
 
 # Objetivo da Arquitetura
 
