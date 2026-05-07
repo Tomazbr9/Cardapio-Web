@@ -47,6 +47,7 @@ CREATE TABLE categories (
     name VARCHAR(100) NOT NULL,
     position INT DEFAULT 0, -- Para ordenar no menu
     is_active BOOLEAN DEFAULT true
+    created_at TIMESTAMP
 );
 ```
 
@@ -70,6 +71,7 @@ CREATE TABLE products (
     image_url VARCHAR(255),
     is_pizza BOOLEAN DEFAULT false, -- Define se segue a lógica de sabores
     is_active BOOLEAN DEFAULT true
+    created_at TIMESTAMP 
 );
 ```
 
