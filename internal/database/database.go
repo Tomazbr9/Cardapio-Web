@@ -1,6 +1,7 @@
 package database
 
 import (
+	"cw/internal/models"
 	"fmt"
 	"log"
 	"os"
@@ -36,4 +37,21 @@ func InitDB() {
 	}
 
 	log.Println("Conexão com o banco de dados PostgreSQL estabelecida com sucesso!")
+
+	log.Println("Iniciando AutoMigrate dos modelos GORM")
+
+	err = DB.AutoMigrate(
+		&models.Tenant{},
+		&models.Categories{},
+		&models.Products{},
+		&models.PizzaSizes{},
+		&models.PizzaFlavors{},
+		models.PizzaFlavorPrices{},
+	)
+
+	if err != nil {
+		log.Fatal("Erro fatal durante AutoMigrate", err)
+	}
+
+	log.Println("AutoMigrate concluído com sucesso! Tabelas criadas/atualizadas.")
 }
