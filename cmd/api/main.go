@@ -1,7 +1,11 @@
 package main
 
 import (
+	"cw/internal/controllers"
 	"cw/internal/database"
+	"cw/internal/repositories"
+	"cw/internal/services"
+	"cw/routes"
 	"log"
 	"net/http"
 
@@ -10,7 +14,13 @@ import (
 
 
 func main() {
+	
 	database.InitDB()
+
+	db := database.DB
+	tenantRepository := repositories.NewTenantRepository(db)
+	tenantService := services.NewTenantService(*tenantRepository)
+	tenantHandler := controllers.NewTenantHandler(*tenantService)
 
 	router := gin.Default()
 
@@ -21,6 +31,8 @@ func main() {
 			"database":  "connected",
 		})
 	})
+
+	routes.RegisterAdminRoutes(router, tenantHandler)
 
 	log.Println("Iniciando API na porta 8080...")
 	

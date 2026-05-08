@@ -8,7 +8,7 @@ import (
 )
 
 type Tenant struct {
-	ID uuid.UUID `json:"id"`
+	ID uuid.UUID `gorm:"primaryKey;type:uuid;default:gen_random_uuid()" json:"id"`
 	Name string `json:"name"`
 	Slug string `json:"slug"`
 	WhatsappNumber string `json:"whatsapp_number"`
