@@ -1,8 +1,8 @@
 package main
 
 import (
-	"cw/internal/controllers"
 	"cw/internal/database"
+	"cw/internal/handlers"
 	"cw/internal/repositories"
 	"cw/internal/services"
 	"cw/routes"
@@ -20,7 +20,11 @@ func main() {
 	db := database.DB
 	tenantRepository := repositories.NewTenantRepository(db)
 	tenantService := services.NewTenantService(*tenantRepository)
-	tenantHandler := controllers.NewTenantHandler(*tenantService)
+	tenantHandler := handlers.NewTenantHandler(*tenantService)
+
+	categoryRepository := repositories.NewCategoryRepository(db)
+	categoryService := services.NewCategoryRepository(categoryRepository)
+	categoryHandler := handlers.NewCategoryHandler(categoryService)
 
 	router := gin.Default()
 
@@ -32,7 +36,9 @@ func main() {
 		})
 	})
 
-	routes.RegisterAdminRoutes(router, tenantHandler)
+	routes.RegisterSuperAdminRoutes(router, tenantHandler)
+	routes.RegisterTenantAdminRoutes(router, *tenantService, categoryHandler)
+	routes.RegisterPublicRoutes(router, *tenantService, categoryHandler)
 
 	log.Println("Iniciando API na porta 8080...")
 	

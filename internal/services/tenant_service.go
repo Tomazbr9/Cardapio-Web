@@ -1,7 +1,7 @@
 package services
 
 import (
-	"cw/inputs"
+	"cw/internal/inputs"
 	"cw/internal/models"
 	"cw/internal/repositories"
 
@@ -16,13 +16,13 @@ func NewTenantService(repository repositories.TenantRepository)  *TenantService 
 	return &TenantService{repository: repository}
 }
 
-func (service *TenantService) CreateTenant(input inputs.CreateTenantInput) (models.Tenant, error) {
+func (service *TenantService) CreateTenant(inputs inputs.CreateTenantInput) (models.Tenant, error) {
 	
 	tenant := models.Tenant{
-		Name: input.Name,
-		Slug: input.Slug,
-		WhatsappNumber: input.WhatsappNumber,
-		ConfigJson: input.ConfigJSON,
+		Name: inputs.Name,
+		Slug: inputs.Slug,
+		WhatsappNumber: inputs.WhatsappNumber,
+		ConfigJson: inputs.ConfigJSON,
 	}
 
 	err := service.repository.CreateTenant(&tenant)
@@ -41,7 +41,11 @@ func (service *TenantService) GetTenant(tenantId string) (*models.Tenant, error)
 	return service.repository.FindByID(id)
 }
 
-func (service *TenantService) UpdateTenant(tenantId string, input inputs.UpdateTenantInput) (*models.Tenant, error) {
+func (service *TenantService) GetBySlug(slug string) (*models.Tenant, error) {
+	return service.repository.FindBySlug(slug)
+}
+
+func (service *TenantService) UpdateTenant(tenantId string, inputs inputs.UpdateTenantInput) (*models.Tenant, error) {
 
 	tenant, err := service.GetTenant(tenantId)
 
@@ -49,20 +53,20 @@ func (service *TenantService) UpdateTenant(tenantId string, input inputs.UpdateT
 		return nil, err
 	}
 
-	if input.Name != nil {
-		tenant.Name = *input.Name
+	if inputs.Name != nil {
+		tenant.Name = *inputs.Name
 	}
 
-	if input.Slug != nil {
-		tenant.Slug = *input.Slug
+	if inputs.Slug != nil {
+		tenant.Slug = *inputs.Slug
 	}
 
-	if input.WhatsappNumber != nil {
-		tenant.WhatsappNumber = *input.WhatsappNumber
+	if inputs.WhatsappNumber != nil {
+		tenant.WhatsappNumber = *inputs.WhatsappNumber
 	}
 
-	if input.ConfigJSON != nil {
-		tenant.ConfigJson = *input.ConfigJSON
+	if inputs.ConfigJSON != nil {
+		tenant.ConfigJson = *inputs.ConfigJSON
 	}
 
 	if err := service.repository.UpdateTenant(tenant); err != nil {

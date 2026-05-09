@@ -29,6 +29,19 @@ func (repository *TenantRepository) FindByID(id uuid.UUID) (*models.Tenant, erro
 	return &tenant, nil
 }
 
+func (repository *TenantRepository) FindBySlug(slug string) (*models.Tenant, error) {
+
+	var tenant models.Tenant
+
+	err := repository.db.First(&tenant, "slug = ?", slug).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &tenant, nil 
+}
+
 func (repository *TenantRepository) UpdateTenant(tenant *models.Tenant) (error) {
 	return repository.db.Save(tenant).Error
 }

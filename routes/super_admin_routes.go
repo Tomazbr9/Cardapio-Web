@@ -1,13 +1,13 @@
 package routes
 
 import (
-	"cw/internal/controllers"
+	"cw/internal/handlers"
 
 	"github.com/gin-gonic/gin"
 )
 
 
-func RegisterAdminRoutes(router *gin.Engine, tenantHandler *controllers.TenantHandler) {
+func RegisterSuperAdminRoutes(router *gin.Engine, tenantHandler *handlers.TenantHandler) {
 
 	adminGroup := router.Group("/api/admin") 
 

@@ -1,7 +1,7 @@
-package controllers
+package handlers
 
 import (
-	"cw/inputs"
+	"cw/internal/inputs"
 	"cw/internal/services"
 	"errors"
 	"net/http"
