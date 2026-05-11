@@ -14,6 +14,7 @@ func RegisterPublicRoutes(
 	router *gin.Engine,
 	tenantService services.TenantService,
 	categoryHandler *handlers.CategoryHandler,
+	productHandler *handlers.ProductHandler,
 ) {
 
 	menuGroup := router.Group("/t/:tenant_slug")
@@ -32,5 +33,6 @@ func RegisterPublicRoutes(
 		})
 
 		menuGroup.GET("/categories", categoryHandler.ListTenantCategories)
+		menuGroup.GET("/categories/:category_id/products", productHandler.ListProductsForCategory)
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"cw/internal/handlers"
 	"cw/internal/repositories"
 	"cw/internal/services"
-	"cw/routes"
+	"cw/internal/routes"
 	"log"
 	"net/http"
 
@@ -26,6 +26,14 @@ func main() {
 	categoryService := services.NewCategoryRepository(categoryRepository)
 	categoryHandler := handlers.NewCategoryHandler(categoryService)
 
+	productRepository := repositories.NewProductRepository(db)
+	productService := services.NewProductService(productRepository)
+	productHandler := handlers.NewProductHandler(productService)
+
+	pizzaFlavorRepository := repositories.NewPizzaFlavorRepository(db)
+	pizzaFlavorService := services.NewPizzaFlavorService(pizzaFlavorRepository)
+	pizzaFlavorHandler := handlers.NewPizzaFlavorHandler(pizzaFlavorService)
+
 	router := gin.Default()
 
 	router.GET("/health", func (c *gin.Context)  {
@@ -37,8 +45,8 @@ func main() {
 	})
 
 	routes.RegisterSuperAdminRoutes(router, tenantHandler)
-	routes.RegisterTenantAdminRoutes(router, *tenantService, categoryHandler)
-	routes.RegisterPublicRoutes(router, *tenantService, categoryHandler)
+	routes.RegisterTenantAdminRoutes(router, *tenantService, categoryHandler, productHandler, pizzaFlavorHandler)
+	routes.RegisterPublicRoutes(router, *tenantService, categoryHandler, productHandler)
 
 	log.Println("Iniciando API na porta 8080...")
 	

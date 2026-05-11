@@ -11,7 +11,9 @@ import (
 func RegisterTenantAdminRoutes(
 	router *gin.Engine,
 	tenantService services.TenantService,
-	categoryHandler *handlers.CategoryHandler, 
+	categoryHandler *handlers.CategoryHandler,
+	productHandler *handlers.ProductHandler, 
+	pizzaFlavorHandler *handlers.PizzaFlavorHandler,
 ) {
 
 	adminGroup := router.Group("/api/t/:tenant_slug/admin")
@@ -25,6 +27,17 @@ func RegisterTenantAdminRoutes(
 		{
 			categories.POST("/", categoryHandler.CreateCategory)
 			
+		}
+
+		products := adminGroup.Group("/products")
+		{
+			products.POST("/", productHandler.CreateProduct)
+		}
+
+		pizzaFlavors := adminGroup.Group("/pizza-flavors")
+		{
+			pizzaFlavors.GET("/", pizzaFlavorHandler.ListFlavors)
+			pizzaFlavors.POST("/", pizzaFlavorHandler.CreatePizzaFlavor)
 		}
 	}
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type CategoryService interface {
-	CreateCategory(tenantId uuid.UUID, request inputs.CreateCategoryInput) (*models.Categories, error)
+	CreateCategory(tenantId uuid.UUID, input inputs.CreateCategoryInput) (*models.Categories, error)
 	ListTenantCategories(tenantId uuid.UUID) ([]models.Categories, error)
 }
 
@@ -21,11 +21,11 @@ func NewCategoryRepository(repository repositories.CategoryRepository) CategoryS
 	return &categoryService{repository: repository}
 }
 
-func (service *categoryService) CreateCategory(tenantID uuid.UUID, request inputs.CreateCategoryInput) (*models.Categories, error){
+func (service *categoryService) CreateCategory(tenantID uuid.UUID, input inputs.CreateCategoryInput) (*models.Categories, error){
 	category := &models.Categories{
 		TenantID: tenantID,
-		Name: request.Name,
-		Position: request.Position,
+		Name: input.Name,
+		Position: input.Position,
 		IsActive: true,
       }
 

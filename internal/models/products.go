@@ -9,7 +9,7 @@ import (
 )
 
 type Products struct {
-	ID uuid.UUID `json:"id"`
+	ID uuid.UUID `gorm:"primaryKey;type:uuid;default:gen_random_uuid()" json:"id"`
 	TenantID uuid.UUID `json:"tenant_id"`
 	CategoryID uuid.UUID `json:"category_id"`
 	Name string `json:"name"`
