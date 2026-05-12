@@ -11,6 +11,7 @@ import (
 type ProductRepository interface {
 	CreateProduct(product *models.Products) error
 	FindByTenantAndCategory(tenantId uuid.UUID, categoryId uuid.UUID) ([]models.Products, error)
+	FindById(productId uuid.UUID, tenantId uuid.UUID) (*models.Products, error)
 } 
 
 
@@ -31,6 +32,17 @@ func (repository *productRepository) FindByTenantAndCategory(tenantId uuid.UUID,
 
 	err := repository.db.Where("tenant_id = ? AND category_id = ? AND is_active = ?", tenantId, categoryId, true).Find(&products).Error
 
-	return products, err
-	
+	return products, err	
+}
+
+func (repository *productRepository) FindById(productId uuid.UUID, tenantId uuid.UUID) (*models.Products, error) {
+	var product models.Products
+
+	err := repository.db.Where("id = ? AND tenant_id = ?", productId, tenantId).First(&product).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &product, nil
 }

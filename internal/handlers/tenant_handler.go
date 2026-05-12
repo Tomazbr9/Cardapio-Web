@@ -46,9 +46,9 @@ func (handler *TenantHandler) CreateTenant(c *gin.Context) {
 
 func (handler *TenantHandler) GetTenant(c *gin.Context) {
 	
-	id := c.Param("id")
+	tenantId := c.Param("id")
 
-	tenant, err := handler.service.GetTenant(id)
+	tenant, err := handler.service.GetTenant(tenantId)
 	if err != nil {
 		
 		if errors.Is(err, gorm.ErrRecordNotFound) {

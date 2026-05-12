@@ -205,6 +205,9 @@ CREATE TABLE order_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID REFERENCES orders(id),
     product_id UUID REFERENCES products(id),
+    product_name REFERENCES products(id)
+    unit_price DECIMAL(10, 2)
+    flavor_name REFERENCES pizza_flavors(id)
     size_id UUID REFERENCES pizza_sizes(id), -- NULL se não for pizza
     quantity INT NOT NULL,
     subtotal DECIMAL(10,2) NOT NULL,

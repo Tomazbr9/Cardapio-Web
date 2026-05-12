@@ -12,6 +12,7 @@ import (
 type ProductService interface {
 	CreateProduct(tenantId uuid.UUID, input inputs.CreateProductInput) (*models.Products, error)
 	ListProductsForCategory(tenantId uuid.UUID, categoryId uuid.UUID) ([]models.Products, error)
+	GetProduct(productId uuid.UUID, tenantId uuid.UUID) (*models.Products, error)
 }
 
 type productService struct {
@@ -42,7 +43,17 @@ func (service *productService) CreateProduct(tenantId uuid.UUID, input inputs.Cr
 	return product, nil
 }
 
-func (service productService) ListProductsForCategory(tenantId uuid.UUID, categoryId uuid.UUID) ([]models.Products, error) {
+func (service *productService) ListProductsForCategory(tenantId uuid.UUID, categoryId uuid.UUID) ([]models.Products, error) {
 	return service.repository.FindByTenantAndCategory(tenantId, categoryId)
+}
+
+func (service *productService) GetProduct(productId uuid.UUID, tenantId uuid.UUID) (*models.Products, error) {
+	product, err := service.repository.FindById(productId, tenantId)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return product, err
 }
 

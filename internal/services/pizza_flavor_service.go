@@ -12,6 +12,7 @@ import (
 type PizzaFlavorService interface {
 	CreatePizzaFlavor(tenantId uuid.UUID, input inputs.CreatePizzaFlavorInput) (*models.PizzaFlavors, error)
 	ListFlavors(tenantId uuid.UUID) ([]models.PizzaFlavors, error)
+	GetPizzaFlavor(pizzaFlavorId uuid.UUID, tenantId uuid.UUID) (*models.PizzaFlavors, error)
 }
 
 type pizzaFlavorService struct {
@@ -38,6 +39,17 @@ func (service  pizzaFlavorService) CreatePizzaFlavor(tenantID uuid.UUID, input i
 	return pizzaFlavor, nil
 }
 
-func (service  pizzaFlavorService) ListFlavors(tenantID uuid.UUID) ([]models.PizzaFlavors, error) {
+func (service pizzaFlavorService) ListFlavors(tenantID uuid.UUID) ([]models.PizzaFlavors, error) {
 	return service.repository.FindAllPizzaFlavorByTenant(tenantID)
+}
+
+func (service pizzaFlavorService) GetPizzaFlavor(pizzaFlavorId uuid.UUID, tenantId uuid.UUID) (*models.PizzaFlavors, error) {
+	
+	pizzaFlavor, err := service.repository.FindById(pizzaFlavorId, tenantId)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return pizzaFlavor, nil
 }

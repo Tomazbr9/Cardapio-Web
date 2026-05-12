@@ -68,3 +68,29 @@ func (handler *ProductHandler) ListProductsForCategory(c *gin.Context) {
 	})
 
 }
+
+func (handler *ProductHandler) GetProduct(c *gin.Context) {
+	
+	productIdStr := c.Param("id")
+	tenantId := c.MustGet("tenantID").(uuid.UUID)
+
+	productId, err := uuid.Parse(productIdStr)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "ID do produto inválido",
+		})
+		return 
+	}
+
+	product, err := handler.service.GetProduct(productId, tenantId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Produto não encontrado",
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": product})
+
+}

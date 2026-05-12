@@ -14,6 +14,7 @@ func RegisterTenantAdminRoutes(
 	categoryHandler *handlers.CategoryHandler,
 	productHandler *handlers.ProductHandler, 
 	pizzaFlavorHandler *handlers.PizzaFlavorHandler,
+	pizzaSizeHandler *handlers.PizzaSizeHandler,
 ) {
 
 	adminGroup := router.Group("/api/t/:tenant_slug/admin")
@@ -38,6 +39,12 @@ func RegisterTenantAdminRoutes(
 		{
 			pizzaFlavors.GET("/", pizzaFlavorHandler.ListFlavors)
 			pizzaFlavors.POST("/", pizzaFlavorHandler.CreatePizzaFlavor)
+		}
+
+		pizzaSizes := adminGroup.Group("/pizza-sizes")
+		{
+			pizzaSizes.GET("/", pizzaSizeHandler.ListPizzaSizes)
+			pizzaSizes.POST("/", pizzaSizeHandler.CreatePizzaSize)
 		}
 	}
 }
