@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
 )
 
 type Order struct {
@@ -12,8 +13,8 @@ type Order struct {
 	TenantID         uuid.UUID       `json:"tenant_id"`
 	CustomerName     string          `json:"customer_name"`
 	CustomerWhatsapp string          `json:"customer_whatsapp"` 
-	TotalAmount      float64         `json:"total_amount"`      
-	DeliveryFee      float64         `json:"delivery_fee"`      
+	TotalAmount      decimal.Decimal `json:"total_amount"`      
+	DeliveryFee      decimal.Decimal `json:"delivery_fee"`      
 	Status           string          `json:"status"`            
 	PaymentMethod    string          `json:"payment_method"`
 	AddressJSON      json.RawMessage `gorm:"type:jsonb" json:"address_json"` 

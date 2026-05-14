@@ -42,9 +42,9 @@ func (handler *PizzaSizeHandler) CreatePizzaSize(c *gin.Context) {
 } 
 
 func (handler *PizzaSizeHandler) ListPizzaSizes(c *gin.Context) {
-	tenantID := c.MustGet("tenantID").(uuid.UUID)
+	tenantId := c.MustGet("tenantID").(uuid.UUID)
 
-	pizzaSizes, err := handler.service.ListPizzaSizes(tenantID)
+	pizzaSizes, err := handler.service.ListPizzaSizes(tenantId)
 	
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -53,4 +53,29 @@ func (handler *PizzaSizeHandler) ListPizzaSizes(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": pizzaSizes})
+}
+
+func (handler *PizzaSizeHandler) GetPizzaFlavor(c *gin.Context) {
+
+	pizzaSizeIdStr := c.Param("productId")
+	tenantId := c.MustGet("id").(uuid.UUID)
+
+	pizzaSizeId, err := uuid.Parse(pizzaSizeIdStr)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "ID do produto inválido",
+		})
+		return 
+	}
+
+	pizzaSize, err := handler.service.GetPizzaSize(pizzaSizeId, tenantId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Produto não encontrado",
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": pizzaSize})
 }

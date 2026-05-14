@@ -32,18 +32,21 @@ func RegisterTenantAdminRoutes(
 
 		products := adminGroup.Group("/products")
 		{
+			products.GET("/:id", productHandler.GetProduct)
 			products.POST("/", productHandler.CreateProduct)
 		}
 
 		pizzaFlavors := adminGroup.Group("/pizza-flavors")
 		{
 			pizzaFlavors.GET("/", pizzaFlavorHandler.ListFlavors)
+			pizzaFlavors.GET("/:id", pizzaSizeHandler.GetPizzaFlavor)
 			pizzaFlavors.POST("/", pizzaFlavorHandler.CreatePizzaFlavor)
 		}
 
 		pizzaSizes := adminGroup.Group("/pizza-sizes")
 		{
 			pizzaSizes.GET("/", pizzaSizeHandler.ListPizzaSizes)
+			pizzaSizes.GET("/:id", pizzaSizeHandler.GetPizzaSize)
 			pizzaSizes.POST("/", pizzaSizeHandler.CreatePizzaSize)
 		}
 	}

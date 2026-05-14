@@ -30,6 +30,7 @@ func (service *pizzaSizeService) CreatePizzaSize(tenantId uuid.UUID, input input
 		Name: input.Name,
 		Slices: input.Slices,
 		MaxFlavors: input.MaxFlavors,
+		BasePrice: input.BasePrice,
       }
 
 	if err := service.repository.CreatePizzaSize(pizzaSize); err != nil {
