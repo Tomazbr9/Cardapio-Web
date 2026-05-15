@@ -37,7 +37,7 @@ func NewOrderService(
 }
 
 func (s *orderService) CreateOrder(tenantID uuid.UUID, input inputs.CreateOrderInput) (*models.Order, error) {
-	// 1. Inicializa o Cabeçalho do Pedido
+	
 	order := &models.Order{
 		TenantID:         tenantID,
 		CustomerName:     input.CustomerName,
@@ -45,8 +45,8 @@ func (s *orderService) CreateOrder(tenantID uuid.UUID, input inputs.CreateOrderI
 		DeliveryFee:      input.DeliveryFee,
 		PaymentMethod:    input.PaymentMethod,
 		AddressJSON:      input.AddressJSON,
-		Status:           "PENDING",         // Todo pedido começa como pendente
-		TotalAmount:      input.DeliveryFee, // O total começa valendo apenas a taxa de entrega
+		Status:           "PENDING",       
+		TotalAmount:      input.DeliveryFee,
 	}
 
 	for _, itemInput := range input.Items {

@@ -14,3 +14,7 @@ type CreateOrderInput struct {
 	DeliveryFee      decimal.Decimal `json:"delivery_fee"`
 	Items            []OrderItemInput `json:"items" binding:"required,min=1"`
 }
+
+type UpdateOrderStatusInput struct {
+	Status string `json:"status" binding:"required"`
+}
