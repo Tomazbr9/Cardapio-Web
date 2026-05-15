@@ -38,6 +38,11 @@ func main() {
 	pizzaSizeService := services.NewPizzaSizeService(pizzaSizeRepository)
 	pizzaSizeHandler := handlers.NewPizzaSizeHandler(pizzaSizeService)
 
+	orderRepository := repositories.NewOrderRepository(db)
+	orderService := services.NewOrderService(orderRepository, productRepository, pizzaSizeRepository, pizzaFlavorRepository)
+	orderHandler := handlers.NewOrderHandler(orderService)
+
+
 
 	router := gin.Default()
 
@@ -51,7 +56,7 @@ func main() {
 
 	routes.RegisterSuperAdminRoutes(router, tenantHandler)
 	routes.RegisterTenantAdminRoutes(router, *tenantService, categoryHandler, productHandler, pizzaFlavorHandler, pizzaSizeHandler)
-	routes.RegisterPublicRoutes(router, *tenantService, categoryHandler, productHandler)
+	routes.RegisterPublicRoutes(router, *tenantService, categoryHandler, productHandler, orderHandler)
 
 	log.Println("Iniciando API na porta 8080...")
 	

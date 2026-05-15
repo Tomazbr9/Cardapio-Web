@@ -15,6 +15,7 @@ func RegisterPublicRoutes(
 	tenantService services.TenantService,
 	categoryHandler *handlers.CategoryHandler,
 	productHandler *handlers.ProductHandler,
+	orderHandler *handlers.OrderHandler,
 ) {
 
 	menuGroup := router.Group("/t/:tenant_slug")
@@ -32,7 +33,16 @@ func RegisterPublicRoutes(
 			})
 		})
 
-		menuGroup.GET("/categories", categoryHandler.ListTenantCategories)
-		menuGroup.GET("/categories/:category_id/products", productHandler.ListProductsForCategory)
+		categories := menuGroup.Group("/categories")
+		{
+			categories.GET("/", categoryHandler.ListTenantCategories)			
+			categories.GET("/categories/:category_id/products", productHandler.ListProductsForCategory)
+		}
+
+		orders := menuGroup.Group("/orders")
+		{
+			orders.POST("/", orderHandler.CreateOrder)
+		} 
+		
 	}
 }

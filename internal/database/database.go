@@ -50,6 +50,7 @@ func InitDB() {
 		&models.Order{},
 		&models.OrderItem{},
 		&models.PizzaFlavorPrices{},
+		&models.OrderItemFlavor{},
 	)
 
 	if err != nil {

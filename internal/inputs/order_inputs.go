@@ -11,6 +11,6 @@ type CreateOrderInput struct {
 	CustomerWhatsapp string          `json:"customer_whatsapp" binding:"required"`
 	PaymentMethod    string          `json:"payment_method"`
 	AddressJSON      json.RawMessage `json:"address_json"`
-	DeliveryFee      decimal.Decimal         `json:"delivery_fee"`
+	DeliveryFee      decimal.Decimal `json:"delivery_fee"`
 	Items            []OrderItemInput `json:"items" binding:"required,min=1"`
 }
